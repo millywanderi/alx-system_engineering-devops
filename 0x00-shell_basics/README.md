@@ -1,1 +1,2 @@
-My first README.md at shell_basics directory
+#!/bin/bash
+printing the absolute path name of the current working directory
