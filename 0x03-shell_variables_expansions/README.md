@@ -1,2 +1,2 @@
 #!/bin/bash
-Write a script that prints every other line from the input, starting with the first line.
+Write a script that converts a number from base 2 to base 10.
