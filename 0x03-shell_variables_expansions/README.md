@@ -1,2 +1,2 @@
 #!/bin/bash
-Write a script that converts a number from base 2 to base 10.
+Write a script that encodes and decodes text using the rot13 encryption. Assume ASCII.
