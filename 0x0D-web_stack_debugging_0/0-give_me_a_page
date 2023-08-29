@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Script that starts apache and return Holberton School
+
+sudo service apache2 start
