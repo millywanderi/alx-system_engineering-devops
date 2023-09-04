@@ -5,7 +5,7 @@ sudo service haproxy stop
 sudo apt-get purge -y haproxy
 
 sudo apt update
-sudo apt install haproxy
+sudo apt install -y haproxy
 
 sudo sed -i '$aENABLED=1' /etc/default/haproxy
 
