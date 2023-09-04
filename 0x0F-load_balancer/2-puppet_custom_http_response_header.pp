@@ -1,17 +1,21 @@
 # Installs a Nginx server with custom HTTP header
 
-exec {'update':
-  command => '/usr/binapt-get update',
+exec { 'update':
+  command => '/usr/bin/apt-get -y update',
+  path    => ['/usr/bin', '/bin'],
 }
--> package {'nginx':
-  ensure => 'present',
+package { 'nginx':
+  ensure => installed,
 }
--> file_line { 'http_header':
-  path => '/etc/nginx/nginx.conf',
-  line => "http {\n\tadd_header X-Served-By \"${hostname}\";",
-  match => 'http' {',
-  }
+file { '/var/www/html/index.html':
+  content => 'Hello World!',
 }
--> exec {'start':
-  command => '/usr/bin/service nginx start',
+file_line { 'add custom header':
+  ensure => present,
+  path   => 'etc/nginx/sites-available/default',
+  line   => "\tadd_header X-Served-By ${hostname];",
+  after  => 'server_name_;',
+}
+service { 'nginx':
+  ensure => running,
 }
