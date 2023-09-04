@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Script that configures HAproxy in a load balancer
+
+sudo service haproxy stop
+sudo apt-get purge -y haproxy
+
+sudo apt update
+sudo apt install haproxy
+
+sudo sed -i '$aENABLED=1' /etc/default/haproxy
+
+sudo sed -i '$a\\nfrontend http_front\n\tbind *:80\n\tstats uri /haproxy?stats\n\tdefault_backend http_back\n\nbackend http_back\n\tbalance roundrobin\n\tserver 263882-web-01 54.159.0.36:80 check\n\tserver 263882-web-02 52.201.211.192:80 check' /etc/haproxy/haproxy.cfg
+sudo service haproxy restart
