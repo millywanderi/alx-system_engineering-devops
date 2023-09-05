@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Configure nginx for connection on port 80
+
+# Replaces line 8080 with 80 in Nginx configuration file
+sed -i "s/listen 8080 default_server;/listen 80 default_server;/" /etc/nginx/sites-enabled/default
+
+# Replaces line [::]:8080 with [::]:80 in the Nginx configuration file for 1pv6only=on support
+sed -i "s/listen \[::\]:8080 default_server ipvonly=on;/listen \[::\]:80 default_server;/" /etc/nginx/sites-enabled/default
+
+# Removes ipv6only=on
+sed -i "s/ ipv6only=on//" /etc/nginx/sites-available/default
+
+# Restart Nginx
+service nginx restart
