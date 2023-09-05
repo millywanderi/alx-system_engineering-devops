@@ -1,6 +1,6 @@
 # Installs a Nginx server with custom HTTP header
 
-exec { 'upt-pdate':
+exec { 'apt-pdate':
   command => '/usr/bin/apt-get -y update',
   path    => ['/usr/bin', '/bin'],
 }
