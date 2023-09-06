@@ -1,5 +1,5 @@
-Host 54.159.0.36
-    HostName 54.159.0.36
+Host 100.25.170.22
+    HostName 100.25.170.22
     User ubuntu
     PreferredAuthentications publickey
     IdentityFile ~/.ssh/school
