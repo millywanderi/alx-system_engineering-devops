@@ -44,8 +44,8 @@ frontend myfrontend
 
 backend mybackend
 		mode http
-		server 263882-web-01 100.25.170.22
-		server 263882-web-02 35.174.185.161
+		server 263882-web-01 100.25.170.22:80
+		server 263882-web-02 35.174.185.161:80
 		option log-health-checks
 		http-request set-header X-Forwarded-Port %[dst_port]
 		http-response add-header X-Forward-Proto htts id { ssl-fc }
