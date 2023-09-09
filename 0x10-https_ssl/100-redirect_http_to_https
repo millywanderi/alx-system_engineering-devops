@@ -34,20 +34,13 @@ defaults
 		errorfile 503 /etc/haproxy/errors/503.http
 		errorfile 504 /etc/haproxy/errors/504.http
 
+frontend http_front
+		bind *:80
+		bind *:443 ssl crt /etc/ssl/certs/ssl.pem
+		redirect scheme code 301 https if !{ ssl_fc }
+		default_backend http_back
 
-frontend myfrontend
-		mode	http
-		bind	*:80
-		bind	*:443 ssl crt /etc/letsencrypt/live/www.nginx-server.tech/www.nginx-server.tech.pem
-		redirect scheme https code 301 if !{ ssl_fc }
-		default_backend mybackend
-
-backend mybackend
-		mode http
-		server 263882-web-01 100.25.170.22:80
-		server 263882-web-02 35.174.185.161:80
-		option log-health-checks
-		http-request set-header X-Forwarded-Port %[dst_port]
-		http-response add-header X-Forward-Proto htts id { ssl-fc }
-		
-		server letsencrypt 127.0.0.1:8888
+backend http_back
+		balance roundrobin
+		server 263882-web-01 100.25.170.22:80 check
+		server 263882-web-02 35.174.185.161:80 check
