@@ -1,5 +1,5 @@
 # 0x13. Firewall
-This directory contains tasks done during **Full Stack Software Engineering studies** at ** ALX Africa**. It aims to teach about Firewall setup and configuration.
+This directory contains tasks done during **Full Stack Software Engineering studies** at **ALX Africa**. It aims to teach about Firewall setup and configuration.
 ## Files
 | Filename | Description |
 |--------|-----------|
