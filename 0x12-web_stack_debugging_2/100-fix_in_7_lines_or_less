@@ -2,5 +2,5 @@
 # make task 1 script short and sweet
 pkill -f apache2
 chmod 777 /etc/nginx/nginx.conf
-sed -i 's/80/80/g'/etc/nginx/sites-enable/default
+sed -i 's/80/80/g'/etc/nginx/sites-enabled/default
 sudo -u nginx service nginx restart
