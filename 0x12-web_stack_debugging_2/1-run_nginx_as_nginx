@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # Script that configures NGINX and run as nginx user
 
-# Change the terms on the config file
-chmod 777 /etc/nginx/nginx.conf
-
 # Update the listening ports
-sudo sed -i 's/80/8080/g' /etc/nginx/sites-enabled/default
+sed -i "s/#user www-data/user nginx/" /etc/nginx/nginx.conf
+sed -i "s/80/8080/g" /etc/nginx/sites-enabled/default
+
+# Change the terms on the config file
+chmod 644 /etc/nginx/nginx.conf
 
 # Kill the apache2 server
 pkill apache2
 
 # Restart nginx
-sudo -u nginx service nginx restart
+sudo -u nginx service nginx start
