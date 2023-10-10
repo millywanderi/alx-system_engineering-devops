@@ -7,9 +7,10 @@ import requests
 
 def count_words(subreddit, word_list, found_list=[], after=None):
     """Prints countes of a givent words found in a subreddit"""
-    u_agent = {'User-Agent': 'test45'}
+    u_agent = {'User-agent': 'test45'}
     posts = requests.get('https://www.reddit.com/r/{}/hot.json?after={}'
                          .format(subreddit, after), headers=u_agent)
+
     if after is None:
         word_list = [word.lower() for word in word_list]
 
@@ -31,8 +32,6 @@ def count_words(subreddit, word_list, found_list=[], after=None):
                     res[word.lower()] += 1
                 else:
                     res[word.lower()] = 1
-        for key, value in sorted(res.items(), key=lambda item: item[1],
-                                 reverse=True):
-            print('{}: {}'.format(key, value))
-    else:
-        return
+            for key, value in sorted(res.items(), key=lambda item: item[1],
+                                     reverse=True):
+                print('{}: {}'.format(key, value))
