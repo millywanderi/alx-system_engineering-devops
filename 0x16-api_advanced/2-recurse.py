@@ -3,43 +3,42 @@
 Function that returns a list containing the titles of
 all hot articles for a given subreddit.
 """
-import requests
-import sys
+from requests import get
 
 
-def add_title(hot_list, hot_posts):
-    """Add item into a list"""
-    if len(hot_posts) == 0:
-        return
-    hot_list.append(hot_posts[0]['data']['title'])
-    hot_posts.pop(0)
-    add_title(hot_list, hot_posts)
+REDDIT = "https://www.reddit.com/"
+HEADERS = {'user-agent': 'my-app/0.0.1'}
 
 
-def recurse(subreddit, hot_list=[], after=None):
+def recurse(subreddit, hot_list=[], after=""):
     """Queries to Reddit API"""
-    u_agent = 'Mozilla/5.0'
-    headers = {
-        'User-Agent': u_agent
-    }
+    if after is None:
+        return hot_list
+
+    url = REDDIT + "r/{}/hot/.json".format(subreddit)
 
     params = {
+        'limit': 100,
         'after': after
     }
 
-    url = "https:/www.reddit.com/r/{}/hot.json".format(subreddit)
-    res = requests.get(url,
-                       headers=headers,
-                       params=params,
-                       allow_redirects=False)
+    res = get(url, headers=HEADERS, params=params, allow_redirects=False)
 
     if res.status_code != 200:
         return None
 
-    dic = res.json()
-    hot_posts = dic['data']['children']
-    add_title(hot_list, hot_posts)
-    after = dic['data']['after']
-    if not after:
-        return hot_list
-    return recurse(subreddit, hot_list=hot_list, after=after)
+    try:
+        js = res.json()
+    except ValueError:
+        return None
+
+    try:
+        data = js.get("data")
+        after = data.get("after")
+        children = data.get("children")
+        for child in children:
+            post = child.get("data")
+            hot_list.append(post.get("title"))
+    except Exception:
+        return None
+    return recurse(subreddit, hot_list, after)
