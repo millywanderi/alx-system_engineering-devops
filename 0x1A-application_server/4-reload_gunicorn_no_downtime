@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # Gracefully restarts Gunicorn
 
-pgrep gunicorn | xargs kill -HUP
+PID=$(pgrep gunicorn | head -n 1)
+kill -HUP "$PID"
